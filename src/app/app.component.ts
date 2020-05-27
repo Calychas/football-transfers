@@ -6,5 +6,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'onos4-visualizer';
+  title = 'Football_clubs_transfers';
 }
