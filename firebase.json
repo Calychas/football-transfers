@@ -1,0 +1,16 @@
+{
+  "hosting": {
+    "public": "./dist/onos4-visualizer",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  }
+}

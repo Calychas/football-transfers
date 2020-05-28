@@ -1,1 +1,11 @@
-<router-outlet></router-outlet>
+<mat-toolbar color="primary">Football transfers 2000-2020</mat-toolbar>
+<mat-drawer-container class="example-container" [hasBackdrop]="false">
+  <mat-drawer mode="over" style="width: 300px" opened>
+    <app-network-details [selectedElement]="selectedElement"></app-network-details>
+  </mat-drawer>
+  <mat-drawer-content>
+    <app-network-graph (selectedElement)="selectedElement = $event"></app-network-graph>
+  </mat-drawer-content>
+</mat-drawer-container>
+
+
