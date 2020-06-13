@@ -1,11 +1,15 @@
-<mat-toolbar color="primary">Football transfers 2000-2020</mat-toolbar>
-<mat-drawer-container class="example-container" [hasBackdrop]="false">
-  <mat-drawer mode="over" style="width: 300px" opened>
-    <app-network-details [selectedElement]="selectedElement"></app-network-details>
-  </mat-drawer>
-  <mat-drawer-content>
-    <app-network-graph (selectedElement)="selectedElement = $event"></app-network-graph>
-  </mat-drawer-content>
-</mat-drawer-container>
+<div fxLayout="column" style="height: 100%">
+  <mat-toolbar color="primary" fxFlex="initial">Football transfers 2000-2019</mat-toolbar>
+  <mat-drawer-container [hasBackdrop]="false" fxFlex="auto">
+    <mat-drawer mode="over" style="width: 300px" opened>
+      <app-network-details [selectedElement]="selectedElement"></app-network-details>
+    </mat-drawer>
+    <mat-drawer-content style="overflow: hidden" >
+      <app-network-graph (selectedElement)="selectedElement = $event"></app-network-graph>
+    </mat-drawer-content>
+  </mat-drawer-container>
+</div>
+
+
 
 

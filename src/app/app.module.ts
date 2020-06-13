@@ -12,6 +12,11 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {MatSidenavModule} from "@angular/material/sidenav";
 import { NetworkDetailsComponent } from './network-details/network-details.component';
 import {MatDividerModule} from "@angular/material/divider";
+import {MatSliderModule} from "@angular/material/slider";
+import {FormsModule} from "@angular/forms";
+import {MatCheckboxModule} from "@angular/material/checkbox";
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {MatSelectModule} from "@angular/material/select";
 
 @NgModule({
   declarations: [
@@ -22,13 +27,18 @@ import {MatDividerModule} from "@angular/material/divider";
   imports: [
     BrowserModule,
     AppRoutingModule,
+    FormsModule,
     BrowserAnimationsModule,
     HttpClientModule,
     FlexLayoutModule,
     MatToolbarModule,
     MatProgressSpinnerModule,
     MatSidenavModule,
-    MatDividerModule
+    MatDividerModule,
+    MatSliderModule,
+    MatCheckboxModule,
+    MatFormFieldModule,
+    MatSelectModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

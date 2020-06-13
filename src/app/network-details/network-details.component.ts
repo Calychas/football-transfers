@@ -5,7 +5,7 @@ import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core'
   templateUrl: './network-details.component.html',
   styleUrls: ['./network-details.component.scss']
 })
-export class NetworkDetailsComponent implements OnChanges {
+export class NetworkDetailsComponent {
   private _selectedElement
 
   get selectedElement(): any {
@@ -20,9 +20,9 @@ export class NetworkDetailsComponent implements OnChanges {
     }
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes.selectedElement.currentValue) {
-      console.log(changes.selectedElement.currentValue.data())
-    }
-  }
+  // ngOnChanges(changes: SimpleChanges): void {
+  //   if (changes.selectedElement.currentValue) {
+  //     console.log(changes.selectedElement.currentValue.data())
+  //   }
+  // }
 }

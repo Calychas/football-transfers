@@ -1,6 +1,6 @@
 #cy-container {
   width: 100vw;
-  height: 93vh;
+  height: 100vh;
   display: block;
 }
 
@@ -12,3 +12,25 @@
   -webkit-transform: translateX(-50%) translateY(-50%);
   transform: translateX(-50%) translateY(-50%);
 }
+
+#time-slider {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  background-color: RGBA(200, 200, 200, 0.4);
+  padding: 8px;
+  width: 400px;
+}
+
+#layout-options {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin-right: 10px;
+  margin-top: 10px;
+  padding: 8px;
+  width: 200px;
+}
+

@@ -8,3 +8,31 @@
 
 <div id="cy-container" #cycontainer></div>
 
+<div id="time-slider" fxLayout="row" fxLayoutAlign="space-around center" fxLayoutGap="3px">
+  <mat-checkbox color="primary" [ngModel]="sliderEnabled" (ngModelChange)="onTimelineToggle($event)" fxFlex="nogrow">Enable Timeline</mat-checkbox>
+  <mat-slider
+    fxFlex="70"
+    color="primary"
+    max="2019"
+    min="2000"
+    step="1"
+    thumbLabel="true"
+    [disabled]="!sliderEnabled"
+    [ngModel]="sliderValue"
+    (ngModelChange)="onSliderChange($event)"
+  ></mat-slider>
+  <span>{{sliderValue}}</span>
+</div>
+
+<div id="layout-options">
+  <mat-form-field appearance="fill">
+    <mat-label>Layout</mat-label>
+    <mat-select [value]="layoutSettings" (valueChange)="setLayout($event)">
+      <mat-option [value]="concentricLayout">Concentric</mat-option>
+      <mat-option [value]="gridLayout">Grid</mat-option>
+      <mat-option [value]="circleLayout">Circle</mat-option>
+      <mat-option [value]="fcoseLayout">fCoSE</mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+

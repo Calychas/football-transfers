@@ -9,7 +9,6 @@ import viewUtilities from 'cytoscape-view-utilities'
 import * as dataforge from 'data-forge'
 import { HttpClient } from "@angular/common/http";
 import {forkJoin, pipe} from "rxjs";
-import {map} from "rxjs/operators";
 
 cytoscape.use( cola )
 cytoscape.use( d3Force )
@@ -30,17 +29,19 @@ export class NetworkGraphComponent implements AfterViewInit {
   private edges_major
   private api
   public isLoading: boolean = true
+  public sliderEnabled: boolean = false
+  public sliderValue: number = 2019
   @Output() selectedElement = new EventEmitter()
 
   // https://github.com/iVis-at-Bilkent/cytoscape.js-fcose
-  private fcoseLayout = {
+  public fcoseLayout = {
     name: 'fcose',
     quality: "proof",
     randomize: false,
     nodeRepulsion: 200000,
-    idealEdgeLength: 400,
+    idealEdgeLength: 600,
     numIter: 5000,
-    nodeSeparation: 300,
+    nodeSeparation: 1000,
     nodeDimensionsIncludeLabels: true,
     ready: () => {
       this.isLoading = true
@@ -50,7 +51,48 @@ export class NetworkGraphComponent implements AfterViewInit {
     }
   }
 
-  private layoutSettings = this.fcoseLayout
+  public gridLayout = {
+    name: 'grid',
+    avoidOverlapPadding: 100,
+    ready: () => {
+      this.isLoading = true
+    },
+    stop: () => {
+      this.isLoading = false
+    },
+    sort: (a,b) => ((a.data('country') > b.data('country')) ? 1 : (a.data('country') < b.data('country')) ? -1 : (b.data('size') - a.data('size')))
+  }
+
+  public circleLayout = {
+    name: 'circle',
+    ready: () => {
+      this.isLoading = true
+    },
+    stop: () => {
+      this.isLoading = false
+    },
+    sort: (a,b) => (a.data('country') > b.data('country') ? 1 : -1)
+  }
+
+  public concentricLayout = {
+    name: 'concentric',
+    // concentric: function( node ){
+    //   return node.degree();
+    // },
+    // levelWidth: function( nodes ){
+    //   return 15;
+    // },
+    // nodeDimensionsIncludeLabels: true,
+    minNodeSpacing: 70,
+    ready: () => {
+      this.isLoading = true
+    },
+    stop: () => {
+      this.isLoading = false
+    }
+  }
+
+  public layoutSettings = this.concentricLayout
 
   constructor(private http: HttpClient) { }
 
@@ -82,11 +124,17 @@ export class NetworkGraphComponent implements AfterViewInit {
       this.nodes_major = JSON.parse(dataforge.fromCSV(nodes).toJSON()).map(n => {
         n["color"] = this.getColorBasedOnLeague(n.group)
         n["size"] = +n["Degree"]
+        n["year"] = +n["year"]
         return {data: n}
       })
 
       this.edges_major = JSON.parse(dataforge.fromCSV(edges).toJSON()).map(e => {
-        e["color"] = this.nodes_major.find(n => n.data.id === e.source).data.color
+        let source_node = this.nodes_major.find(n => n.data.id === e.source).data
+        let target_node = this.nodes_major.find(n => n.data.id === e.target).data
+        e["color"] = source_node.color
+        e["source_label"] = source_node.Label
+        e["target_label"] = target_node.Label
+        e["year"] = +e["year"]
         return {data: e}
       })
       this.createNetwork()
@@ -120,8 +168,8 @@ export class NetworkGraphComponent implements AfterViewInit {
           'line-color': 'data(color)',
           'target-arrow-color': 'data(color)',
           'target-arrow-shape': 'triangle',
-          'opacity': 0.2,
-          // 'curve-style': 'bezier'
+          'opacity': 0.5,
+          'curve-style': 'bezier'
         }
       },
       {
@@ -205,5 +253,21 @@ export class NetworkGraphComponent implements AfterViewInit {
         this.selectedElement.emit(null)
       }
     })
+  }
+
+  onTimelineToggle($event: any) {
+    this.sliderEnabled = $event
+    if (this.sliderEnabled) {
+      this.onSliderChange(this.sliderValue)
+    } else {
+      this.api.show(this.cy.elements())
+    }
+  }
+
+  onSliderChange($event: any) {
+    this.sliderValue = $event
+    this.api.hide(this.cy.edges())
+    let edges_in_year = this.cy.filter(`edge[year=${this.sliderValue}]`)
+    this.api.show(edges_in_year)
   }
 }

@@ -1,7 +1,12 @@
-<p style="text-align: center; "><b>Element details</b></p>
+<p style="text-align: center; ">Element details</p>
 <mat-divider></mat-divider>
 <ng-container *ngIf="selectedElement">
   <p style="padding-left: 5px" *ngFor="let prop of selectedElement">
     <b>{{prop[0]}}</b>: {{prop[1]}}
+  </p>
+</ng-container>
+<ng-container *ngIf="!selectedElement">
+  <p style="padding-left: 5px">
+    <span style="text-align: justify">Select an element in the graph to show additional info.</span>
   </p>
 </ng-container>
