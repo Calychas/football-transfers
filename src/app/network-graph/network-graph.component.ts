@@ -71,7 +71,7 @@ export class NetworkGraphComponent implements AfterViewInit {
     stop: () => {
       this.isLoading = false
     },
-    sort: (a,b) => (a.data('country') > b.data('country') ? 1 : -1)
+    sort: (a,b) => ((a.data('country') > b.data('country')) ? 1 : (a.data('country') < b.data('country')) ? -1 : (a.data('size') - b.data('size')))
   }
 
   public concentricLayout = {
